@@ -11,9 +11,11 @@ import main.Game;
 
 public class LoadSave {
 	
-	public static final String PLAYER_ATLAS = "tank_sprites_blue.png";
+	public static final String PLAYER1_ATLAS = "tank_sprites_blue.png";
 	public static final String LEVEL_ATLAS = "Ground.png";
 	public static final String LEVEL_ONE_DATA = "level_one_data.png";
+	public static final String BALL = "football.png";
+	public static final String BACKGROUND = "Background.png";
 	
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;

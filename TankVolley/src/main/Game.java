@@ -1,9 +1,12 @@
 package main;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
+import entities.Ball;
 import entities.Player;
 import levels.LevelManager;
+import utilz.LoadSave;
 
 public class Game implements Runnable{
 	
@@ -14,14 +17,16 @@ public class Game implements Runnable{
 	private final int UPS_SET = 100;
 	private Player player;
 	private LevelManager levelManager;
+	private Ball ball;
 	
 	public final static int TILES_DEFAULT_SIZE  = 50;
-	public final static float SCALE = 1.2f;
+	public final static float SCALE = 1.0f;
 	public final static int TILES_IN_WIDTH = 26;
 	public final static int TILES_IN_HEIGHT = 14;
 	public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
 	public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
 	public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
+	private BufferedImage backgroundImg;
 	
 	public Game() {
 		initClasses();
@@ -29,14 +34,16 @@ public class Game implements Runnable{
 		gamePanel = new GamePanel(this);
 		gameWindow = new GameWindow(gamePanel);
 		gamePanel.requestFocus();
+		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.BACKGROUND);
 		
 		startGameLoop();
 	}
 	
 	private void initClasses() {
 		levelManager = new LevelManager(this);
-		player = new Player(1000,499,(int) (150*SCALE),(int) (150*SCALE));
+		player = new Player(1000,597,(int) (150*SCALE),(int) (150*SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
+		ball = new Ball(650,350,(int) (50*SCALE),(int) (50*SCALE));
 	}
 
 	private void startGameLoop() {
@@ -50,8 +57,10 @@ public class Game implements Runnable{
 	}
 	
 	public void render(Graphics g) {
-		player.render(g);
+		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
 		levelManager.draw(g);
+		player.render(g);
+		ball.renderBall(g);
 	}
 
 	@Override

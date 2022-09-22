@@ -1,19 +1,13 @@
 package entities;
 
-import static utilz.Constants.Directions.DOWN;
 import static utilz.Constants.Directions.LEFT;
 import static utilz.Constants.Directions.RIGHT;
-import static utilz.Constants.Directions.UP;
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.CanMoveHere;
-import static utilz.LoadSave.PLAYER_ATLAS;
+import static utilz.LoadSave.PLAYER1_ATLAS;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
 
 import main.Game;
 import utilz.LoadSave;
@@ -130,7 +124,6 @@ public class Player extends Entity{
 		moving = false;
 		if(!left && !right && !up && !down)
 			return;
-		
 		float xSpeed = 0, ySpeed = 0;
 		
 		if (left && !right && !up && !down) {
@@ -139,11 +132,14 @@ public class Player extends Entity{
 		}else if(right && !left && !up && !down) {
 			xSpeed = playerSpeed;
 			playerDir = RIGHT;
-		}else if (up && !right && !left && !down)
+		}else if (up && !right && !left && !down) {
 			aiming = true;
-		else if (down && !right && !left && !up)
+			return;
+		}
+		else if (down && !right && !left && !up) {
 			aiming = true;
-		
+			return;
+		}
 		if(CanMoveHere(hitbox.x+xSpeed, hitbox.y+ySpeed, hitbox.width, hitbox.height, lvlData)) {
 			hitbox.x+=xSpeed;
 			hitbox.y+=ySpeed;
@@ -153,7 +149,7 @@ public class Player extends Entity{
 	}
 	
 	private void loadAnimations() {
-			BufferedImage img = LoadSave.GetSpriteAtlas(PLAYER_ATLAS);
+			BufferedImage img = LoadSave.GetSpriteAtlas(PLAYER1_ATLAS);
 			
 			animations = new BufferedImage[6][8];
 			

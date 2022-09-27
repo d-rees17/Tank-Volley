@@ -52,3 +52,4 @@ public class GamePanel extends JPanel{
 		return game;
 	}
 }
+
